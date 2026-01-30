@@ -84,6 +84,36 @@ export OPENAI_API_KEY="sk-your-api-key"
 aider --model gpt-5
 ```
 
+## OpenClaw / ClawdBot
+
+1. Chạy onboard wizard:
+```bash
+openclaw onboard
+```
+
+2. Cấu hình model trong `~/.openclaw/agents/<agentId>/models.json`:
+```json
+{
+  "ramclouds": {
+    "provider": "openai",
+    "baseUrl": "https://ramclouds.me/v1",
+    "apiKey": "sk-your-api-key",
+    "model": "gpt-5"
+  }
+}
+```
+
+3. Hoặc set environment variable:
+```bash
+export OPENAI_API_KEY="sk-your-api-key"
+export OPENAI_BASE_URL="https://ramclouds.me/v1"
+```
+
+4. Sử dụng với agent:
+```bash
+openclaw agent --message "Hello" --model ramclouds
+```
+
 ## Environment Variables (Universal)
 
 ```bash
