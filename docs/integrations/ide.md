@@ -115,13 +115,21 @@ openclaw agent --message "Hello" --model ramclouds
 
 > **Lưu ý:** Bắt buộc phải thêm header `User-Agent`, nếu không sẽ lỗi 403.
 
-**OpenAI Node** không hỗ trợ custom headers, nên phải dùng **HTTP Request node**:
+### OpenAI Node
 
-1. Thêm node **HTTP Request**
-2. Cấu hình:
-   - Method: `POST`
-   - URL: `https://ramclouds.me/v1/chat/completions`
-3. Thêm **Headers**:
+1. Tạo **Credentials** → **OpenAI API**:
+   - API Key: `sk-your-api-key`
+   - Base URL: `https://ramclouds.me/v1`
+2. Trong node, thêm **Header**:
+   - Name: `User-Agent`
+   - Value: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36`
+3. Chọn Model: `gpt-5` hoặc model khác
+
+### HTTP Request Node
+
+1. Method: `POST`
+2. URL: `https://ramclouds.me/v1/chat/completions`
+3. Headers:
    - `Authorization`: `Bearer sk-your-api-key`
    - `Content-Type`: `application/json`
    - `User-Agent`: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36`
