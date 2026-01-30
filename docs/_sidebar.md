@@ -7,14 +7,11 @@
   - [Overview](api/overview.md)
   - [Chat Completions](api/chat-completions.md)
   - [Models](api/models.md)
-  - [Images](api/images.md)
-  - [Embeddings](api/embeddings.md)
 
-- Integrations
+- IDE Integrations
+  - [Claude Code / Roo Code](integrations/ide.md)
   - [Cherry Studio](integrations/cherry-studio.md)
   - [Lobe Chat](integrations/lobe-chat.md)
-  - [Other Apps](integrations/others.md)
 
-- Support
-  - [FAQ](faq.md)
-  - [Contact](contact.md)
+- [FAQ](faq.md)
+- [Contact](contact.md)

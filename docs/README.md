@@ -1,39 +1,35 @@
-# Ramclouds API Documentation
+# Ramclouds API
 
-Welcome to **Ramclouds API** - Your unified gateway to access all major AI models through a single, OpenAI-compatible API.
+> Unified AI Gateway - Truy cập 28+ AI models qua một API
 
-## What is Ramclouds?
+## Base URL
 
-Ramclouds provides a unified API interface that allows you to access multiple AI providers (OpenAI, Anthropic, Google, and more) through a single endpoint. No need to manage multiple API keys or learn different API formats.
+```
+https://ramclouds.me/v1
+```
 
-## Features
+## Quick Start
 
-- **OpenAI Compatible** - Use the same API format you already know
-- **Multiple Models** - Access 28+ AI models from various providers
-- **Simple Pricing** - Pay-as-you-go with transparent pricing
-- **High Availability** - Enterprise-grade infrastructure
-- **Fast Response** - Optimized routing for low latency
+```bash
+curl https://ramclouds.me/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-5", "messages": [{"role": "user", "content": "Hello!"}]}'
+```
 
-## Available Models
+## Models
 
 | Provider | Models |
 |----------|--------|
-| OpenAI | GPT-5, GPT-5.1, GPT-5.2, GPT-5 Codex |
-| Anthropic | Claude Opus 4.5, Claude Sonnet 4.5, Claude Haiku 4.5 |
-| Google | Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 3 Pro Preview |
-| DeepSeek | DeepSeek V3.1, DeepSeek V3.2 |
-| Alibaba | Qwen3 Max, Qwen3 Coder Plus |
-| Moonshot | Kimi K2 Thinking |
-| Zhipu | GLM-4.6, GLM-4.7 |
-| MiniMax | MiniMax M2.1 |
+| OpenAI | gpt-5, gpt-5.1, gpt-5.2, gpt-5-codex |
+| Anthropic | claude-opus-4-5, claude-sonnet-4-5, claude-haiku-4-5 |
+| Google | gemini-2.5-pro, gemini-2.5-flash, gemini-3-pro-preview |
+| DeepSeek | deepseek-v3.1, deepseek-v3.2 |
+| Alibaba | qwen3-max, qwen3-coder-plus |
 
-## Quick Links
+## Links
 
-- [Quick Start Guide](guide/quickstart.md)
+- [Quick Start](guide/quickstart.md)
 - [API Reference](api/overview.md)
-- [Integration Examples](integrations/cherry-studio.md)
-
-## Support
-
-- **Bot Telegram**: [@ramclouds_bot](https://t.me/ramclouds_bot)
-- **Website**: [ramclouds.me](https://ramclouds.me)
+- [IDE Integrations](integrations/ide.md)
+- [Telegram Bot](https://t.me/ramclouds_bot)
