@@ -98,20 +98,46 @@ openclaw onboard
     "provider": "openai",
     "baseUrl": "https://ramclouds.me/v1",
     "apiKey": "sk-your-api-key",
-    "model": "gpt-5"
+    "model": "gpt-5",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
   }
 }
 ```
 
-3. Hoặc set environment variable:
-```bash
-export OPENAI_API_KEY="sk-your-api-key"
-export OPENAI_BASE_URL="https://ramclouds.me/v1"
-```
-
-4. Sử dụng với agent:
+3. Sử dụng với agent:
 ```bash
 openclaw agent --message "Hello" --model ramclouds
+```
+
+## n8n (OpenAI Node)
+
+1. Trong workflow, thêm node **OpenAI**
+2. Tạo **Credentials** mới:
+   - Credential Type: **OpenAI API**
+   - API Key: `sk-your-api-key`
+   - Base URL: `https://ramclouds.me/v1`
+
+3. Cấu hình node:
+   - Model: `gpt-5` hoặc model khác
+   - Messages: theo yêu cầu
+
+**Hoặc dùng HTTP Request node:**
+```json
+{
+  "method": "POST",
+  "url": "https://ramclouds.me/v1/chat/completions",
+  "headers": {
+    "Authorization": "Bearer sk-your-api-key",
+    "Content-Type": "application/json",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+  },
+  "body": {
+    "model": "gpt-5",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }
+}
 ```
 
 ## Environment Variables (Universal)
