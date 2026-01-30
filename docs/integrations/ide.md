@@ -111,19 +111,10 @@ openclaw onboard
 openclaw agent --message "Hello" --model ramclouds
 ```
 
-## n8n (OpenAI Node)
+## n8n
 
-1. Trong workflow, thêm node **OpenAI**
-2. Tạo **Credentials** mới:
-   - Credential Type: **OpenAI API**
-   - API Key: `sk-your-api-key`
-   - Base URL: `https://ramclouds.me/v1`
+Dùng **HTTP Request node** (khuyến nghị):
 
-3. Cấu hình node:
-   - Model: `gpt-5` hoặc model khác
-   - Messages: theo yêu cầu
-
-**Hoặc dùng HTTP Request node:**
 ```json
 {
   "method": "POST",
