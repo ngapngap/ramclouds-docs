@@ -18,9 +18,9 @@ GET https://ramclouds.me/v1/models
 ### Anthropic
 | Model | Description |
 |-------|-------------|
-| claude-opus-4-5 | Most capable |
-| claude-sonnet-4-5 | Balanced |
-| claude-haiku-4-5 | Fast |
+| claude-opus-4.6 | Most capable |
+| claude-sonnet-4.6 | Balanced |
+| claude-haiku-4.6 | Fast |
 
 ### Google
 | Model | Description |
@@ -36,6 +36,20 @@ GET https://ramclouds.me/v1/models
 | qwen3-max | Alibaba Qwen |
 | kimi-k2-thinking | Moonshot |
 | glm-4.7 | Zhipu |
+
+## Claude Model ID Rules by Endpoint
+
+- Với endpoint `v1/messages` theo chuẩn Claude (Claude-native), model phải dùng **model ID không có hậu tố `-CL`**.
+- Với adapter tương thích OpenAI (`@ai-sdk/openai-compatible`), model Claude dùng **hậu tố `-CL`**.
+- Quy tắc trên cần áp dụng nhất quán theo đúng nhánh SDK/endpoint để tránh mismatch.
+
+**Ví dụ chuẩn hóa:**
+
+- Correct Claude-native (`v1/messages`): `claude-opus-4.6`
+- Incorrect Claude-native (`v1/messages`): `claude-opus-4.6-CL`
+- Correct OpenAI-compatible (`@ai-sdk/openai-compatible`): `claude-opus-4.6-CL`
+
+> Security note (docs-level): Không commit API key vào repo. Chỉ dùng endpoint localhost từ nguồn tin cậy (tránh endpoint giả mạo). Đồng thời kiểm tra đúng quy tắc hậu tố `-CL` giữa Claude-native và OpenAI-compatible để tránh request fail hoặc lỗi khó chẩn đoán.
 
 ## Example
 ```bash

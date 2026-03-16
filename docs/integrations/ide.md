@@ -2,6 +2,86 @@
 
 Cấu hình Ramclouds API cho các IDE coding assistants.
 
+## Lưu ý khi chọn endpoint `v1/messages` (Claude)
+
+Khi IDE hoặc extension của bạn gọi endpoint `v1/messages`, model Claude phải dùng **model ID chuẩn không có hậu tố `-CL`**.
+
+- Đúng (cho `v1/messages`): `claude-opus-4.6`
+- Sai (cho `v1/messages`): `claude-opus-4.6-CL`
+
+Phạm vi áp dụng: quy tắc này chỉ dành cho `v1/messages`. Với endpoint khác, dùng đúng quy ước của endpoint đó.
+
+### Thao tác cấu hình để tránh nhập nhầm `-CL`
+
+1. Chọn endpoint/base URL tương ứng luồng `v1/messages` trong IDE/tool.
+2. Dán model Claude chuẩn (không `-CL`) vào trường `model`.
+3. Kiểm tra lại preset/template cũ, xóa mọi hậu tố `-CL` nếu còn sót.
+4. Lưu cấu hình và test nhanh 1 request trước khi dùng cho môi trường production.
+
+> Security note (docs-level): cấu hình mismatch endpoint/model có thể làm request fail hoặc phát sinh lỗi khó chẩn đoán. Không commit API key vào repo, kiểm tra endpoint localhost đúng nguồn trước khi lưu, và luôn đối chiếu đúng hậu tố `-CL` giữa Claude-native và OpenAI-compatible.
+
+## OpenCode
+
+### Nhánh 1 — Claude-native (`@ai-sdk/anthropic`)
+
+Dùng khi bạn muốn gọi theo chuẩn Claude-native, model **không có** hậu tố `-CL`.
+
+```ts
+import { anthropic } from '@ai-sdk/anthropic';
+
+const model = anthropic('claude-opus-4.6');
+```
+
+- SDK: `@ai-sdk/anthropic`
+- Model đúng: `claude-opus-4.6`
+- Model sai cho nhánh này: `claude-opus-4.6-CL`
+
+### Nhánh 2 — OpenAI-compatible (`@ai-sdk/openai-compatible`)
+
+Dùng khi ứng dụng/framework đang đi qua adapter tương thích OpenAI, model Claude **có** hậu tố `-CL`.
+
+```ts
+import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
+
+const ramclouds = createOpenAICompatible({
+  name: 'ramclouds',
+  baseURL: 'https://ramclouds.me/v1',
+  apiKey: process.env.RAMCLOUDS_API_KEY,
+});
+
+const model = ramclouds('claude-opus-4.6-CL');
+```
+
+- SDK: `@ai-sdk/openai-compatible`
+- Model đúng: `claude-opus-4.6-CL`
+- Model sai cho nhánh này: `claude-opus-4.6`
+
+> Security note (docs-level): không commit API key; ưu tiên biến môi trường. Nếu dùng endpoint localhost để proxy/router, chỉ trỏ tới endpoint tự quản trị và xác minh nguồn rõ ràng để tránh endpoint giả mạo.
+
+## AmpCode
+
+AmpCode có thể cấu hình theo 2 cách: gọi thẳng provider hoặc đi qua router tập trung. Với router, repo tham chiếu: `https://github.com/fdkgenie/9router`.
+
+Điểm mạnh thực tế khi đi qua 9Router là chỉ cần trỏ **một lần** vào `http://localhost:20128/v1`, sau đó quản lý provider/model ở router thay vì sửa nhiều nơi trong IDE.
+
+### So sánh trực tiếp: cấu hình thẳng vs qua 9Router
+
+| Tiêu chí | Cấu hình thẳng | Qua 9Router |
+|---|---|---|
+| Endpoint trong AmpCode | Mỗi provider một endpoint riêng | Một endpoint thống nhất: `http://localhost:20128/v1` |
+| Quy tắc model suffix | Phải tự nhớ theo từng nhánh SDK | Router giúp chuẩn hóa tập trung theo provider |
+| Độ phức tạp khi đổi provider | Sửa lại nhiều cấu hình client | Chủ yếu đổi tại router, client giữ nguyên |
+| Mở rộng đa provider | Thủ công, dễ drift cấu hình | Dễ mở rộng và quản lý tập trung |
+| Trạng thái RamClouds | Tùy tự tích hợp | Đã thêm RamClouds làm provider |
+
+### Gợi ý cấu hình AmpCode qua 9Router
+
+- Base URL: `http://localhost:20128/v1`
+- API key: key tương ứng do bạn cấu hình trong router
+- Model: theo mapping đã định nghĩa ở 9Router (đúng quy tắc suffix theo nhánh)
+
+> Security note (docs-level): không commit API key vào repo AmpCode config. Xác minh tiến trình đang lắng nghe `localhost:20128` là router tin cậy của bạn trước khi nhập credential. Luôn kiểm tra lại quy tắc `-CL` để tránh nhầm giữa Claude-native và OpenAI-compatible.
+
 ## Claude Code
 
 ```bash
@@ -31,7 +111,7 @@ claude --api-key "sk-your-api-key" --api-url "https://ramclouds.me"
 | Api Provider | `openai-compatible` |
 | Base URL | `https://ramclouds.me/v1` |
 | API Key | `sk-your-api-key` |
-| Model | `claude-sonnet-4-5` hoặc `gpt-5` |
+| Model | `claude-opus-4.6-CL` hoặc `gpt-5` |
 
 **Hoặc settings.json:**
 ```json
@@ -39,7 +119,7 @@ claude --api-key "sk-your-api-key" --api-url "https://ramclouds.me"
   "roo-code.apiProvider": "openai-compatible",
   "roo-code.openaiCompatible.baseUrl": "https://ramclouds.me/v1",
   "roo-code.openaiCompatible.apiKey": "sk-your-api-key",
-  "roo-code.openaiCompatible.model": "claude-sonnet-4-5"
+  "roo-code.openaiCompatible.model": "claude-opus-4.6-CL"
 }
 ```
 
@@ -73,7 +153,7 @@ Edit `~/.continue/config.json`:
 3. Cấu hình:
    - Base URL: `https://ramclouds.me/v1`
    - API Key: `sk-your-api-key`
-   - Model: `claude-opus-4-5`
+   - Model: `claude-opus-4.6-CL`
 
 ## Aider
 

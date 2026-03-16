@@ -10,6 +10,17 @@ https://ramclouds.me/v1
 Authorization: Bearer YOUR_API_KEY
 ```
 
+## Claude `v1/messages` Model ID Note
+
+When using the `v1/messages` endpoint with Claude models, the model ID must use the canonical format **without** the `-CL` suffix.
+
+- Correct (`v1/messages`): `claude-sonnet-4.6`
+- Incorrect (`v1/messages`): `claude-sonnet-4.6-CL`
+
+Scope note: this requirement is specific to `v1/messages`. For other endpoints, follow each endpoint's own model-format documentation. In OpenAI-compatible flows, use the model suffix expected by that adapter (for Claude models, typically `-CL`) and do not reuse that suffix on `v1/messages`.
+
+Security note: endpoint/model mismatch is a common source of request failures. Add endpoint-aware input validation so invalid model IDs are rejected before sending requests.
+
 ## cURL
 ```bash
 curl https://ramclouds.me/v1/chat/completions \

@@ -40,6 +40,17 @@ docs.ramclouds.me
 2. Configure DNS:
    - Add CNAME record: `docs` -> `yourusername.github.io`
 
+## Endpoint/Model Mapping Note
+
+When using the `v1/messages` endpoint with Claude models, use the canonical model ID **without** the `-CL` suffix.
+
+- Correct (`v1/messages`): `claude-sonnet-4.6`
+- Incorrect (`v1/messages`): `claude-sonnet-4.6-CL`
+
+Scope note: this rule is specific to `v1/messages`. If another endpoint has different model ID conventions, follow that endpoint's documentation. In OpenAI-compatible flows, use the model suffix expected by that adapter (for Claude models, typically `-CL`) and do not reuse that suffix on `v1/messages`.
+
+Security note: a mismatched endpoint/model pair (for example, using `-CL` on `v1/messages`) can cause request failures. Add endpoint-aware input validation in clients to reduce configuration errors.
+
 ## File Structure
 
 ```
