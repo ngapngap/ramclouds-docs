@@ -71,10 +71,11 @@ Chuẩn bị đặc tả thay đổi tài liệu để chuẩn hóa lưu ý sử
   - Nếu dùng chuẩn Claude thì dùng `@ai-sdk/anthropic` + model `claude-opus-4.6` (không dùng hậu tố `-CL`).
   - Nếu dùng `@ai-sdk/openai-compatible` thì dùng model có hậu tố `-CL`.
 - AmpCode:
+  - **Correction bắt buộc**: AmpCode chỉ hỗ trợ cấu hình qua proxy server; không hỗ trợ gọi thẳng provider.
   - Bổ sung cấu hình có nhắc repo tham chiếu: `https://github.com/fdkgenie/9router`.
-  - Nhấn mạnh ưu điểm cấu hình nhanh qua một endpoint `http://localhost:20128/v1`.
-  - Có bảng so sánh trực tiếp giữa cấu hình gọi thẳng và cấu hình qua 9Router.
-  - Nêu rõ lợi điểm: đã thêm RamClouds làm provider.
+  - Nhấn mạnh ưu điểm cấu hình nhanh qua một endpoint proxy `http://localhost:20128/v1`.
+  - Loại bỏ mọi mô tả/suy diễn về phương án gọi thẳng provider trong docs.
+  - Nêu rõ lợi điểm: đã thêm RamClouds làm provider thông qua lớp proxy.
 
 ### Checklist subtask triển khai (new wave)
 
@@ -150,3 +151,25 @@ Chuẩn bị đặc tả thay đổi tài liệu để chuẩn hóa lưu ý sử
 - [x] Thêm bảng quy tắc model suffix theo từng nhánh SDK để giảm nhầm lẫn vận hành.
 - [x] Thêm mục “Security follow-up: review/approve” cho các thay đổi security-sensitive nếu cần điều chỉnh lớn ngoài phạm vi docs.
   - Trạng thái review/approve: docs-only change, không thay đổi kiến trúc hay luồng bảo mật runtime.
+
+## Correction / Errata khẩn — AmpCode proxy-only
+
+### Sai sót đã xác nhận
+- Sai sót trước đó: tài liệu có nội dung gợi ý AmpCode có thể cấu hình gọi thẳng provider.
+- Correction chính thức: **AmpCode bắt buộc đi qua proxy server**; không có luồng cấu hình direct-provider hợp lệ.
+
+### Checklist subtask docs follow-up (phạm vi 1-2 file)
+- [x] Subtask 12 — Sửa mô tả AmpCode về proxy-only trong integration guide
+  - Mục tiêu: chỉnh mô tả AmpCode để khẳng định bắt buộc proxy-only, loại bỏ mọi câu chữ gợi ý direct-provider.
+  - File dự kiến tác động (ưu tiên 1, tối đa 2):
+    - `docs/integrations/ide.md`
+    - `README.md` (chỉ note ngắn nếu cần liên kết chéo)
+  - Acceptance criteria:
+    - Mọi mô tả AmpCode khẳng định proxy-only, có ví dụ endpoint qua proxy (ví dụ `http://localhost:20128/v1`).
+    - Không còn hướng dẫn hoặc ví dụ cấu hình gọi thẳng provider cho AmpCode.
+    - Nếu có cập nhật `README.md`, chỉ thêm note ngắn điều hướng, không mở rộng nội dung ngoài correction.
+  - Ghi chú hoàn tất (adjusted): đã cập nhật `docs/integrations/ide.md` theo proxy-only, thay bảng so sánh để loại bỏ nhánh direct-provider, giữ endpoint `http://localhost:20128/v1`, giữ lợi điểm RamClouds qua proxy layer, và bổ sung security note; không chỉnh `README.md` theo ràng buộc phạm vi subtask hiện tại.
+
+### Security note (docs-level, ngắn)
+- Chỉ dùng endpoint proxy tin cậy nội bộ cho cấu hình AmpCode.
+- API key/provider secret phải được bảo vệ tại proxy layer; không mô tả phương án đưa key provider trực tiếp vào AmpCode client.
