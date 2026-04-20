@@ -11,35 +11,117 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-darklight-theme@3/dist/style.min.css">
   <style>
     :root {
-      --theme-color: #6366f1;
-      --theme-color-light: #818cf8;
+      --theme-color: #533afd;
+      --theme-color-light: #665efd;
+      --heading-color: #061b31;
+      --body-muted: #64748d;
+      --surface-border: #e5edf5;
+      --surface-shadow: rgba(50, 50, 93, 0.25) 0 30px 45px -30px, rgba(0, 0, 0, 0.1) 0 18px 36px -18px;
+      --radius-md: 6px;
     }
-    .sidebar-nav > ul > li > a {
-      font-weight: 600;
+
+    body,
+    .app-nav,
+    .app-nav a,
+    .sidebar,
+    .sidebar ul li a,
+    .markdown-section {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-feature-settings: "ss01";
     }
+
     .app-nav,
     .app-nav a {
-      font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 400;
+      color: var(--heading-color);
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--surface-border);
+    }
+
+    .sidebar ul li a {
+      color: var(--heading-color);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .sidebar-nav > ul > li > a {
+      font-weight: 500;
+      color: var(--heading-color);
+    }
+
+    .markdown-section h1,
+    .markdown-section h2,
+    .markdown-section h3,
+    .markdown-section h4 {
+      color: var(--heading-color);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .markdown-section p,
+    .markdown-section li,
+    .markdown-section blockquote,
+    .markdown-section table {
+      color: var(--body-muted);
+      font-weight: 400;
+    }
+
+    .markdown-section a {
+      color: var(--theme-color);
       font-weight: 500;
     }
-    .markdown-section h1 {
-      color: var(--theme-color);
-    }
+
     .markdown-section code {
-      background-color: #f3f4f6;
+      background-color: #f6f8fc;
+      color: #2e2b8c;
       padding: 2px 6px;
+      border: 1px solid var(--surface-border);
       border-radius: 4px;
+      font-family: "Source Code Pro", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
+
+    .markdown-section pre {
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--surface-shadow);
+    }
+
     .markdown-section pre code {
       background-color: transparent;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      color: inherit;
     }
+
     .cover-main {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      background: linear-gradient(135deg, #533afd 0%, #1c1e54 100%) !important;
+      box-shadow: var(--surface-shadow);
+      border-radius: 8px;
     }
-    .cover-main h1 {
-      color: #fff !important;
+
+    .cover-main h1,
+    .cover-main p,
+    .cover-main small,
+    .cover-main a {
+      color: #ffffff !important;
+    }
+
+    .anchor span {
+      color: var(--heading-color);
+    }
+
+    @media (max-width: 960px) {
+      .markdown-section h1,
+      .markdown-section h2,
+      .markdown-section h3,
+      .markdown-section h4 {
+        letter-spacing: -0.01em;
+      }
     }
   </style>
 </head>
@@ -68,7 +150,7 @@
         sync: true
       },
       auto2top: true,
-      themeColor: '#6366f1'
+      themeColor: '#533afd'
     }
   </script>
   <!-- Docsify -->

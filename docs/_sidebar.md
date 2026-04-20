@@ -9,7 +9,17 @@
   - [Models](api/models.md)
 
 - IDE Integrations
-  - [Claude Code / Roo Code](integrations/ide.md)
+  - [IDE Integrations Overview](integrations/ide.md)
+  - [Claude Code](integrations/claude-code.md)
+  - [Roo Code](integrations/roo-code.md)
+  - [OpenCode](integrations/opencode.md)
+  - [AmpCode](integrations/ampcode.md)
+  - [Continue](integrations/continue.md)
+  - [Cursor](integrations/cursor.md)
+  - [Cline](integrations/cline.md)
+  - [Aider](integrations/aider.md)
+  - [OpenClaw / ClawdBot](integrations/openclaw.md)
+  - [n8n](integrations/n8n.md)
   - [Cherry Studio](integrations/cherry-studio.md)
   - [Lobe Chat](integrations/lobe-chat.md)
 
